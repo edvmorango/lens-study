@@ -3,6 +3,7 @@ module Lib
   ) where
 
 import           LensesEx
+import           PrismEx
 
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
