@@ -1,6 +1,8 @@
 module Lib
-    ( someFunc
-    ) where
+  ( someFunc
+  ) where
+
+import           LensesEx
 
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
