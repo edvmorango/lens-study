@@ -7,6 +7,7 @@ import           Control.Lens
 
 data Task
   = CodingTask String
+               Int
   | DrawingTask String
                 Int
                 Int
@@ -18,7 +19,7 @@ data Task
 
 makePrisms ''Task
 
-codingTask = CodingTask "Coding Task"
+codingTask = CodingTask "Coding Task" 8
 
 drawingTask = DrawingTask "Drawing Task" 255 255 255 0.5
 
@@ -29,3 +30,10 @@ getDrawingProduct t = t ^? _DrawingTask
 
 getOpacity :: Task -> Maybe Double
 getOpacity t = t ^? _DrawingTask . _5
+
+--  Id if task is not a DrawingTask
+setOpacity :: Double -> Task -> Task
+setOpacity o t = t & _DrawingTask . _5 .~ o
+
+setR :: Int -> Task -> Task
+setR r t = t & _DrawingTask . _2 .~ r
