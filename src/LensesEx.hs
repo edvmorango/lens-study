@@ -25,11 +25,13 @@ makeLenses ''Project
 defaultTask =
   Task {_taskName = "Get", _taskMinutes = 100, _taskFinishTime = Nothing}
 
+task2 = setTaskName "Set" defaultTask
+
 defaultProject =
   Project
     { _projectName = "Lens Study"
     , _projectCurrentTask = defaultTask
-    , _projectTasks = [defaultTask]
+    , _projectTasks = [defaultTask, task2]
     }
 
 getTaskName :: Task -> String
@@ -45,3 +47,9 @@ setTaskName' n t = (.~) taskName n t
 
 increaseTaskMinutes :: Int -> Task -> Task
 increaseTaskMinutes m t = t & taskMinutes %~ (+ m)
+
+increaseTasksMinutes :: Int -> Project -> Project
+increaseTasksMinutes m p = p & currentIncrease . nestIncrease
+  where
+    nestIncrease = projectTasks . traverse . taskMinutes %~ (+ m)
+    currentIncrease = over (projectCurrentTask . taskMinutes) (+ m)
